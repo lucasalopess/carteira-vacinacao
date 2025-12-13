@@ -12,13 +12,15 @@ public class VacinacaoController : ControllerBase
 {
     private readonly IBaseMapper<Vacinacao, VacinacaoRequestDto, VacinacaoResponseDto> _vacinacaoMapper;
     private readonly IVacinacaoService _vacinacaoService;
+    private readonly IBaseMapper<Vacina, VacinacaoRequestDto, VacinaResponseDto> _vacinaMapper;
 
     public VacinacaoController(
         IBaseMapper<Vacinacao, VacinacaoRequestDto, VacinacaoResponseDto> vacinacaoMapper,
-        IVacinacaoService vacinacaoService)
+        IVacinacaoService vacinacaoService, IBaseMapper<Vacina, VacinacaoRequestDto, VacinaResponseDto> vacinaMapper)
     {
         _vacinacaoMapper = vacinacaoMapper;
         _vacinacaoService = vacinacaoService;
+        _vacinaMapper = vacinaMapper;
     }
 
     [HttpPost(Name = "PostVacinacao")]
@@ -63,10 +65,15 @@ public class VacinacaoController : ControllerBase
             .Select(grupo => new
             {
                 VacinaId = grupo.Key,
-                QuantidadeDoses = grupo.Count(),
-                Historico = grupo.Select(v => v.DataVacinacao).ToList()
+                Historico = grupo.Select(v => new { VacinacaoId = v.Id, v.DataVacinacao }).ToList()
             });
 
         return Ok(resultadoAgrupado);
+    }
+    
+    [HttpGet("pessoa/{id}/atrasadas", Name = "GetAtrasadas")]
+    public IActionResult GetAtrasadas(int id)
+    {
+        return Ok(_vacinaMapper.ToDto(_vacinacaoService.FindAtrasadasByPessoaId(id)));
     }
 }

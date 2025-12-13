@@ -36,11 +36,17 @@ public class VacinacaoRepository(AppDbContext context) : IVacinacaoRepository
 
     public ICollection<Vacinacao> FindByPessoaId(int pessoaId)
     {
-        var vacinacaoList = context.Vacinacao
+        return context.Vacinacao
             .Where(v => v.PessoaId == pessoaId)
             .AsNoTracking()
             .ToList();
+    }
 
-        return vacinacaoList;
+    public ICollection<Vacinacao> FindByPessoaIdAndVacinaId(int pessoaId, int vacinaId)
+    {
+        return context.Vacinacao
+            .Where(v => v.PessoaId == pessoaId && v.VacinaId == vacinaId)
+            .AsNoTracking()
+            .ToList();
     }
 }
