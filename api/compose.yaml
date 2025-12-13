@@ -4,4 +4,35 @@
     build:
       context: .
       dockerfile: api/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    env_file:
+      - api/.env
+    depends_on:
+      - db
+    networks:
+      - app-network
 
+  db:
+    image: postgres:15.7-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    expose:
+      - ${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    external: true
