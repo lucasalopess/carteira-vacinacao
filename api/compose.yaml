@@ -3,7 +3,7 @@
     image: api
     build:
       context: .
-      dockerfile: api/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -22,7 +22,7 @@
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     networks:
       - app-network
 

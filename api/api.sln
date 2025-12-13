@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{4EBD2251-8762-421B-BC8E-7DD506B66F54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api.csproj", "{4EBD2251-8762-421B-BC8E-7DD506B66F54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C191B39A-D156-4741-B517-E24BECB81D35}"
 	ProjectSection(SolutionItems) = preProject
