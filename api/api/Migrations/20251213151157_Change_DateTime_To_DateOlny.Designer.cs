@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using api.Data;
@@ -12,9 +13,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251213151157_New")]
+    partial class New
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,12 +26,12 @@ namespace api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("api.Models.CarteiraCompleta", b =>
+            modelBuilder.Entity("api.Models.CarteiraVacinacao", b =>
                 {
                     b.Property<int>("DosesTomadas")
                         .HasColumnType("integer");
 
-                    b.Property<List<DateOnly>>("HistoricoDatas")
+                    b.PrimitiveCollection<List<DateOnly>>("HistoricoDatas")
                         .IsRequired()
                         .HasColumnType("date[]");
 
@@ -41,8 +44,8 @@ namespace api.Migrations
                     b.Property<string>("VacinaNome")
                         .IsRequired()
                         .HasColumnType("text");
-                    
-                    b.HasNoKey();
+
+                    b.ToTable((string)null);
 
                     b.ToView("vw_CarteiraCompleta", (string)null);
                 });

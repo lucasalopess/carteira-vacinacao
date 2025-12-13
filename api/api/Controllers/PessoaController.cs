@@ -1,65 +1,66 @@
-using api.Dto;
+using api.Data;
+using api.Dtos;
 using api.Mappers;
-using Microsoft.AspNetCore.Mvc;
 using api.Models;
-using api.Repositories;
+using api.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PessoaController(IPessoaRepository pessoaRepository) : ControllerBase
+public class PessoaController : ControllerBase
 {
+    private readonly AppDbContext _context;
+    private readonly IBaseMapper<Pessoa, PessoaRequestDto, PessoaResponseDto> _pessoaMapper;
+    private readonly IPessoaService _pessoaService;
+
+    public PessoaController(
+        IBaseMapper<Pessoa, PessoaRequestDto, PessoaResponseDto> pessoaMapper,
+        IPessoaService pessoaService,
+        AppDbContext context)
+    {
+        _pessoaMapper = pessoaMapper;
+        _pessoaService = pessoaService;
+        _context = context;
+    }
+
     [HttpPost(Name = "PostPessoa")]
     public IActionResult Post([FromBody] PessoaRequestDto pessoaRequestDto)
     {
-        Pessoa pessoa = PessoaMapper.FromDto(pessoaRequestDto);
-
-        pessoaRepository.Add(pessoa);
-
-        return Ok(PessoaMapper.ToDto(pessoa));
+        return Ok(_pessoaMapper.ToDto(_pessoaService.Create(_pessoaMapper.FromDto(pessoaRequestDto))));
     }
 
     [HttpGet("{id}", Name = "GetPessoaById")]
     public IActionResult GetById(int id)
     {
-        Pessoa? pessoa = pessoaRepository.GetById(id);
-
-        return pessoa != null ? Ok(PessoaMapper.ToDto(pessoa)) : NotFound();
+        return Ok(_pessoaMapper.ToDto(_pessoaService.GetById(id)));
     }
 
     [HttpGet(Name = "GetAllPessoas")]
     public IActionResult GetAll()
     {
-        return Ok(pessoaRepository.GetAll()
-            .Select(p => PessoaMapper.ToDto(p)));
+        return Ok(_pessoaService.GetAll()
+            .Select(_pessoaMapper.ToDto));
     }
-    
+
     [HttpPut("{id}", Name = "UpdatePessoa")]
     public IActionResult Update(int id, [FromBody] PessoaRequestDto pessoaRequestDto)
     {
-        Pessoa? existingPessoa = pessoaRepository.GetById(id);
-        if (existingPessoa == null)
-        {
-            return NotFound();
-        }
-
-        existingPessoa.Nome = pessoaRequestDto.Nome;
-        pessoaRepository.Update(existingPessoa);
-
-        return Ok(PessoaMapper.ToDto(existingPessoa));
+        return Ok(_pessoaMapper.ToDto(_pessoaService.Update(id, _pessoaMapper.FromDto(pessoaRequestDto))));
     }
 
     [HttpDelete("{id}", Name = "DeletePessoa")]
     public IActionResult Delete(int id)
     {
-        Pessoa? existingPessoa = pessoaRepository.GetById(id);
-        if (existingPessoa == null)
-        {
-            return NotFound();
-        }
-
-        pessoaRepository.Remove(existingPessoa);
+        _pessoaService.Delete(id);
         return NoContent();
+    }
+
+    [HttpGet("sexo", Name = "GetAllSexoEnum")]
+    public IActionResult GetAllSexoEnum()
+    {
+        var sexoValues = Enum.GetValues<SexoEnum>();
+        return Ok(sexoValues);
     }
 }

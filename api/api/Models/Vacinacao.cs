@@ -1,9 +1,21 @@
 namespace api.Models;
 
-public class Vacinacao(int id, Pessoa pessoa, Vacina vacina, DateTime dataVacinacao)
+public class Vacinacao()
 {
-    public int Id { get; set; } = id;
-    public Pessoa Pessoa { get; set; } = pessoa;
-    public Vacina Vacina { get; set; } = vacina;
-    public DateTime DataVacinacao { get; set; } = dataVacinacao;
+    public Vacinacao(int pessoaId, int vacinaId, DateOnly dataVacinacao) : this()
+    {
+        PessoaId = pessoaId;
+        VacinaId = vacinaId;
+        DataVacinacao = dataVacinacao;
+    }
+
+    public int Id { get; set; }
+
+    public int PessoaId { get; set; }
+    public virtual Pessoa? Pessoa { get; set; }
+
+    public int VacinaId { get; set; }
+    public virtual Vacina? Vacina { get; set; }
+
+    public DateOnly DataVacinacao { get; set; }
 }
