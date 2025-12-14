@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DefaultItemExcludes>$(DefaultItemExcludes);Api.Tests\**</DefaultItemExcludes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,12 +19,6 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.1"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="..\.dockerignore">
-            <Link>.dockerignore</Link>
-        </Content>
     </ItemGroup>
 
 </Project>
