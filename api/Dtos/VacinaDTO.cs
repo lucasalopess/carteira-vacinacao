@@ -11,7 +11,7 @@ public record VacinaRequestDto(
     [Range(0, 100, ErrorMessage = "O intervalo deve ser um valor positivo.")]
     int? IntervaloDoses,
     [Range(1, 10, ErrorMessage = "A quantidade de doses deve ser entre 1 e 10.")]
-    int? QntDoses,
+    int? QtdDoses,
     [Required(ErrorMessage = "O campo de doses de reforço é obrigatório.")]
     bool? DosesReforco,
     [Range(0, 10, ErrorMessage = "A quantidade de reforço deve ser entre 0 e 10.")]
@@ -23,7 +23,7 @@ public record VacinaResponseDto(
     string? Nome,
     int? IdadeInicial,
     int? IntervaloDoses,
-    int? QntDoses,
+    int? QtdDoses,
     bool? DosesReforco,
     int? QtdReforco
 );

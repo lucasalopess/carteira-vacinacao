@@ -13,6 +13,8 @@ namespace api;
 
 public static class Startup
 {
+    private const string CorsPolicyName = "AllowWebApp";
+
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         var host = configuration["POSTGRES_HOST"] ?? Environment.GetEnvironmentVariable("POSTGRES_HOST");
@@ -25,6 +27,17 @@ public static class Startup
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy(CorsPolicyName,
+                builder =>
+                {
+                    builder.WithOrigins("*")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+        });
 
         // Serialização de Enums como Strings no JSON
         services.AddControllers()
@@ -81,6 +94,9 @@ public static class Startup
 
         app.UseMiddleware<GlobalExceptionHandler>();
         app.UseHttpsRedirection();
+
+        app.UseCors(CorsPolicyName);
+
         app.UseAuthorization();
         app.MapControllers();
 

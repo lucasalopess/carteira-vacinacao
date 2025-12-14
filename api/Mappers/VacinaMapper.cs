@@ -11,7 +11,7 @@ public class VacinaMapper : IBaseMapper<Vacina, VacinaRequestDto, VacinaResponse
             dto.Nome!,
             dto.IdadeInicial!.Value,
             dto.IntervaloDoses!.Value,
-            dto.QntDoses!.Value,
+            dto.QtdDoses!.Value,
             dto.DosesReforco!.Value,
             dto.QtdReforco!.Value
         );
@@ -24,7 +24,7 @@ public class VacinaMapper : IBaseMapper<Vacina, VacinaRequestDto, VacinaResponse
             entity.Nome,
             entity.IdadeInicial,
             entity.IntervaloDoses,
-            entity.QntDoses,
+            entity.QtdDoses,
             entity.DosesReforco,
             entity.QtdReforco
         );
@@ -32,12 +32,12 @@ public class VacinaMapper : IBaseMapper<Vacina, VacinaRequestDto, VacinaResponse
 
     public Vacina CopyProperties(Vacina source, Vacina target)
     {
-        source.Nome = source.Nome;
-        source.IdadeInicial = source.IdadeInicial;
-        source.IntervaloDoses = source.IntervaloDoses;
-        source.QntDoses = source.QntDoses;
-        source.DosesReforco = source.DosesReforco;
-        source.QtdReforco = source.QtdReforco;
+        target.Nome = source.Nome;
+        target.IdadeInicial = source.IdadeInicial;
+        target.IntervaloDoses = source.IntervaloDoses;
+        target.QtdDoses = source.QtdDoses;
+        target.DosesReforco = source.DosesReforco;
+        target.QtdReforco = source.QtdReforco;
 
         return target;
     }

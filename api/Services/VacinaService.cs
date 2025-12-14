@@ -29,7 +29,7 @@ public class VacinaService : IVacinaService
     public Vacina Update(int id, Vacina newVacina)
     {
         var updatedVacina = _vacinaMapper.CopyProperties(newVacina, GetById(id));
-
+ 
         _repository.Update(updatedVacina);
 
         return updatedVacina;

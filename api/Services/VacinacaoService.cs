@@ -80,8 +80,8 @@ public class VacinacaoService : IVacinacaoService
             .Where(vacina => vacina.IdadeInicial <= pessoa.Idade)
             .Where(vacina =>
             {
-                var totalNecessario = vacina.QntDoses + (vacina.DosesReforco ? vacina.QtdReforco : 0);
-                
+                var totalNecessario = vacina.QtdDoses + (vacina.DosesReforco ? vacina.QtdReforco : 0);
+
                 var doses = vacinacoesPorVacina[vacina.Id]
                     .OrderBy(vacinacao => vacinacao.DataVacinacao)
                     .ToList(); //pega as doses já tomadas da vacina
@@ -104,13 +104,13 @@ public class VacinacaoService : IVacinacaoService
         _pessoaService.GetById(vacinacao.PessoaId); //Verifica se a pessoa existe
 
         var vacina = _vacinaService.GetById(vacinacao.VacinaId);
-
         var vacinacaoList = FindByPessoaId(vacinacao.PessoaId);
+        var qtdDosesTomadas = vacinacaoList.Count(v => v.VacinaId == vacinacao.VacinaId);
 
-        if ((!vacina.DosesReforco && vacinacaoList.Count >= vacina.QntDoses) || (vacina.DosesReforco &&
-                vacinacaoList.Count >= vacina.QntDoses + vacina.QtdReforco))
+        if ((!vacina.DosesReforco && qtdDosesTomadas >= vacina.QtdDoses) ||
+            (vacina.DosesReforco && qtdDosesTomadas >= vacina.QtdDoses + vacina.QtdReforco))
         {
-            throw new ModelException($"A vacina {vacina.Nome} só permite {vacina.QntDoses + vacina.QtdReforco} doses.");
+            throw new ModelException($"A vacina {vacina.Nome} só permite {vacina.QtdDoses + vacina.QtdReforco} doses.");
         }
     }
 
