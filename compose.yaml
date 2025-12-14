@@ -25,6 +25,16 @@
     networks:
       - app-network
 
+  web:
+    image: frontend
+    build:
+      context: web
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    networks:
+      - app-network
+
 volumes:
   db-data:
 
