@@ -11,9 +11,10 @@ public class VacinaMapper : IBaseMapper<Vacina, VacinaRequestDto, VacinaResponse
             dto.Nome!,
             dto.IdadeInicial!.Value,
             dto.IntervaloDoses!.Value,
-            dto.QtdDoses!.Value,
+            dto.Recorrente!.Value,
+            dto.QtdDoses,
             dto.DosesReforco!.Value,
-            dto.QtdReforco!.Value
+            dto.QtdReforco
         );
     }
 
@@ -24,6 +25,7 @@ public class VacinaMapper : IBaseMapper<Vacina, VacinaRequestDto, VacinaResponse
             entity.Nome,
             entity.IdadeInicial,
             entity.IntervaloDoses,
+            entity.Recorrente,
             entity.QtdDoses,
             entity.DosesReforco,
             entity.QtdReforco
@@ -35,6 +37,7 @@ public class VacinaMapper : IBaseMapper<Vacina, VacinaRequestDto, VacinaResponse
         target.Nome = source.Nome;
         target.IdadeInicial = source.IdadeInicial;
         target.IntervaloDoses = source.IntervaloDoses;
+        target.Recorrente = source.Recorrente;
         target.QtdDoses = source.QtdDoses;
         target.DosesReforco = source.DosesReforco;
         target.QtdReforco = source.QtdReforco;

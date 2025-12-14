@@ -18,9 +18,24 @@ public class VacinaService : IVacinaService
         _repository = repository;
         _vacinaMapper = vacinaMapper;
     }
+    
+    private void ValidarRecorrencia(Vacina vacina)
+    {
+        if (!vacina.Recorrente && (vacina.QtdDoses == null || vacina.QtdDoses <= 0))
+        {
+            throw new ModelException("Vacinas não recorrentes devem ter quantidade de doses maior que zero.");
+        }
+
+        if (vacina.DosesReforco && (vacina.QtdReforco == null || vacina.QtdReforco <= 0))
+        {
+            throw new ModelException("Vacinas com doses de reforço devem ter quantidade de reforço maior que zero.");
+        }
+    }
 
     public Vacina Create(Vacina vacina)
     {
+        ValidarRecorrencia(vacina);
+        
         _repository.Add(vacina);
 
         return vacina;
