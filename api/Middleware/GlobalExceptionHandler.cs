@@ -42,7 +42,7 @@ public class GlobalExceptionHandler
                 break;
             default:
                 statusCode = HttpStatusCode.InternalServerError;
-                message = "Ocorreu um erro inesperado." + exception.Message;
+                message = "Ocorreu um erro inesperado.";
                 break;
         }
 
