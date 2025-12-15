@@ -9,7 +9,8 @@
     env_file:
       - api/.env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -24,6 +25,11 @@
       - 5432:5432
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   web:
     image: frontend
@@ -34,6 +40,8 @@
       - "4200:4200"
     networks:
       - app-network
+    depends_on:
+      - api
 
 volumes:
   db-data:

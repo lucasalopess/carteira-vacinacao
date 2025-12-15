@@ -87,10 +87,10 @@ export function CentralAlerta({pessoa, vacinasAtrasadas, vacinacoes, isLoading}:
                                             <p>• Vacina Recorrente</p>
                                         ) : (
                                             <>
-                                                <p>• Doses: {getVacinacaoCount(vacina.id)}/{vacina.qtdDoses || 0}</p>
+                                                <p>• Doses: {Math.min(getVacinacaoCount(vacina.id), vacina.qtdDoses ?? 0)}/{vacina.qtdDoses ?? 0}</p>
                                                 {vacina.dosesReforco && (
                                                     <p>•
-                                                        Reforços: {Math.max(0, getVacinacaoCount(vacina.id) - (vacina.qtdDoses || 0))}/{vacina.qtdReforco || 0}</p>
+                                                        Reforços: {Math.max(0, getVacinacaoCount(vacina.id) - (vacina.qtdDoses??0))}/{vacina.qtdReforco??0}</p>
                                                 )}
                                             </>
                                         )}
