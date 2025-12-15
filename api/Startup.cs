@@ -33,7 +33,7 @@ public static class Startup
             options.AddPolicy(CorsPolicyName,
                 builder =>
                 {
-                    builder.WithOrigins("*")
+                    builder.WithOrigins("http://localhost:4300", "https://carteira-vacinacao.lucasalopes.com.br")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
