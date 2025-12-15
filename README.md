@@ -123,7 +123,7 @@ docker compose down
 
 | Serviço       | URL                           |
 |---------------|-------------------------------|
-| Frontend      | http://localhost:4200         |
+| Frontend      | http://localhost:4300         |
 | API           | http://localhost:8080         |
 | Swagger (Dev) | http://localhost:8080/swagger |
 | PostgreSQL    | localhost:5432                |
