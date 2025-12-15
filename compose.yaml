@@ -37,7 +37,7 @@
       context: web
       dockerfile: Dockerfile
     ports:
-      - "4200:4200"
+      - "4300:4300"
     networks:
       - app-network
     depends_on:
